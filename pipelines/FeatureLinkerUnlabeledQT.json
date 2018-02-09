@@ -1,0 +1,24 @@
+{
+  "pipeline": {
+    "name": "FeatureLinker"
+  },
+  "transform": {
+    "image": "container-registry.phenomenal-h2020.eu/phnmnl/openms:v2.1.0_cv0.2.15",
+    "cmd": [ "/bin/bash" ],
+    "stdin": [ 
+    "dte=$(date '+%d_%m_%Y_%H_%M')",
+    "FILES=$(find /pfs/FeatureFinder -name \"*.featureXML\")",
+    "FeatureLinkerUnlabeledQT -in $FILES -out /pfs/out/${dte}linked.consensusXML"
+    ]
+  },
+"parallelism_spec": {
+    "constant": 1
+  },
+ "input": {
+    "atom": {
+      "repo": "FeatureFinder",
+      "glob": "/"
+    }
+  },
+  "scale_down_threshold": "5m"
+}

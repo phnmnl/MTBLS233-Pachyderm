@@ -1,0 +1,28 @@
+{
+  "pipeline": {
+    "name": "TextExporter"
+  },
+   "transform": {
+    "image": "container-registry.phenomenal-h2020.eu/phnmnl/openms:v2.1.0_cv0.2.15",
+    "cmd": [ "/bin/bash" ],
+    "stdin": [
+    "for filename in /pfs/FeatureLinker/*;",
+    "do",
+    "shortname=$(basename $filename)",
+    "shortname=${shortname%.*}",
+    "dash='_'",
+    "TextExporter -in ${filename} -out /pfs/out/${shortname}${dash}tab.csv",
+    "done"
+    ]
+  },
+"parallelism_spec": {
+    "constant": 1
+  },
+ "input": {
+    "atom": {
+      "repo": "FeatureLinker",
+      "glob": "/*"
+    }
+  },
+  "scale_down_threshold": "5m"
+}
